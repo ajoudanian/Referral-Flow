@@ -1,9 +1,11 @@
 import React from 'react'
+import Auth from '../soc/auth'
+
 
 const Home = () => (
-    <div>
+    <Auth><div>
         Home
-    </div>
+    </div></Auth>
 )
 
 export default Home;
