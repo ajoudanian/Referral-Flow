@@ -1,17 +1,27 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter} from 'react-router-dom'
-import './style/style.css'
+import { BrowserRouter} from 'react-router-dom';
+import './config/db';
+import './style/style.css';
 
 //COMPONENTS
-import Routes from './structure/routes'
-import Layout from './layout/layout'
+import ReducProvider from './structure/redux-provider';
+import Routes from './structure/routes';
+import Layout from './layout/layout';
 
 
 
 class App extends Component {
     render(){
-        return <BrowserRouter><Layout><Routes /></Layout></BrowserRouter>
+        return (
+            <BrowserRouter>
+                <ReducProvider>
+                    <Layout>
+                        <Routes />
+                    </Layout>
+                </ReducProvider>
+            </BrowserRouter>
+        )
     }
 }
 
