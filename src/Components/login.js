@@ -18,7 +18,6 @@ class Login extends Component{
         let password =  event.target.password.value;
         let current = this;
         firebase.auth().signInWithEmailAndPassword(email,password).then(() => {
-            console.log('loged in',this.props);
             this.props.history.push('/');
             return null
         }).catch((error) => {

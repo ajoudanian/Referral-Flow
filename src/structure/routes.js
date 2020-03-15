@@ -1,5 +1,6 @@
 import React,{ Component } from 'react';
 import { Route,Switch } from 'react-router-dom';
+import { firebase } from '../config/firebase'
 
 //Components
 import Home from '../components/home'
@@ -12,15 +13,15 @@ import UnPrivateRoute from '../soc/un-private-route'
 
 class Routes extends Component {
     render(){
-        console.log(this.props);
+        const auth = firebase.auth().currentUser;
         return (
             <div>
                 <Switch>
                     <Route path='/about' component={About} />
-                    <Route path='/register' component={Register} />
-                    <UnPrivateRoute path='/login' component={Login} />
-                    <UnPrivateRoute path='/logout' component={Logout} />
-                    <PrivateRoute auth={this.props.auth} path='/' component={Home} />
+                    <UnPrivateRoute auth={auth} path='/register' component={Register} />
+                    <UnPrivateRoute auth={auth} path='/login' component={Login} />
+                    <PrivateRoute auth={auth} path='/logout' component={Logout} />
+                    <PrivateRoute auth={auth} path='/' component={Home}/>
                     
                 </Switch>
             </div>

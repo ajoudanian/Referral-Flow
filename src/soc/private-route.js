@@ -6,7 +6,6 @@ const PrivateRoute = ({
         component:Comp,
         ...rest
     }) => {
-    console.log('this',auth);
     return <Route {...rest} component={(props) => (
         auth ? 
         <Comp {...props} />

@@ -1,15 +1,20 @@
 import React from 'react'
 import Header from './header'
 import {Container} from 'react-bootstrap'
+import Routes from '../structure/routes';
 
-const Layout = (props) => (
-    <div>
+
+
+const Layout = (props) => {
     
+    return (
+    <div>
         <Header />
         <Container>
-        <div>{props.children}</div>
+            <Routes {...props} />
         </Container>
-    </div>   
-)
+    </div>
+    )
+}
 
 export default Layout;
