@@ -1,11 +1,14 @@
 import React from 'react'
 import Header from './header'
+import {Container} from 'react-bootstrap'
 
 const Layout = (props) => (
     <div>
-        <div><Header /></div>
+    
+        <Header />
+        <Container fluid>
         <div>{props.children}</div>
-        <div>footer</div>
+        </Container>
     </div>
     
 )
