@@ -5,36 +5,39 @@ import * as actions from '../redux/actions';
 import { Spinner } from 'react-bootstrap'
 import { firebase } from '../config/firebase';
 
-import Users from './users'
 import InviteForm from './invite'
 import Pendings from './pendings'
+import Accepted from './accepted'
 
 class Home extends Component{
 
     state = { loading: true }
 
     componentDidMount(){
-        this.props.getCurrentUser();
-            
-        this.props.loadReferrals(firebase.auth().currentUser.uid).then(()=> {
-            this.setState({ loading: false });
-        });
-        
+        if(firebase.auth().currentUser)
+        {
+            this.props.getCurrentUser();
+            this.props.loadReferrals(firebase.auth().currentUser.uid).then(()=> {
+                this.setState({ loading: false });
+            });
+        }
     }
 
     render(){
-        console.log(this.props);
+        
         return this.state.loading ? 
         <div className="preloader"><Spinner animation="border" role="status">
             <span className="sr-only">Loading...</span>
         </Spinner></div>
          : 
-         <div><h1>Home</h1>
+         <div>
         <InviteForm {...this.props} />
         <br />
         <Pendings {...this.props} />
+        <br />
+        <Accepted {...this.props} />
 
-        <Users {...this.props} /></div>
+        </div>
             
     }   
 }

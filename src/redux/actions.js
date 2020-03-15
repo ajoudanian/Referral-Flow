@@ -1,16 +1,6 @@
 import { firebase , firebaseDBUsers , firebaseDBReferral } from "../config/firebase";
 
 
-// export const startLoadingUsers = () => ((dispatch) => {
-//     firebaseDBUsers.once('value').then( (snapshot) => {
-//         let users = [];
-//         snapshot.forEach((childsnapshot) => {
-//             users.push(childsnapshot.val());
-//         })
-//         dispatch(loadUsers(users));
-//     }).catch((error) => console.log(error));
-// }
-// );
 
 
 
@@ -44,9 +34,19 @@ export function addReferral(referaal){
 export function getCurrentUser(){
 
     const auth = firebase.auth().currentUser;
+    let user = { email:auth.email , uid:auth.uid}
+    const request = firebaseDBUsers.orderByChild("uid").equalTo(auth.uid).once('value').then( (snapshot) => {        
+        snapshot.forEach((childsnapshot) => {
+            const val = childsnapshot.val();
+            
+            user.displayName = val.displayname;
+        })
+        return user;
+    })
+
     return {
         type: 'GET-CURRENT-USER',
-        payload:auth
+        payload:request
     }
 }
 
