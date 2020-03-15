@@ -15,5 +15,6 @@ const firebaseConfig = {
 
 const firebaseDB = firebase.database();
 const firebaseDBUsers = firebase.database().ref('users');
+const firebaseDBReferral = firebase.database().ref('referral');
 
-export { firebase , firebaseDB , firebaseDBUsers };
+export { firebase , firebaseDB , firebaseDBUsers , firebaseDBReferral };
