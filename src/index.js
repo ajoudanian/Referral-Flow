@@ -25,5 +25,9 @@ class App extends Component {
     }
 }
 
+firebase.auth().onAuthStateChanged((user) => {
+    ReactDOM.render(<App auth={user} />, document.getElementById('root'));
+})
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+
