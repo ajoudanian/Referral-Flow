@@ -55,3 +55,11 @@ body{
 .preloader{
     text-align: center;
 }
+
+.referance-link{
+    color: #dddd99;
+}
+
+.referance-link:hover{
+    color: #ffdd99;
+}

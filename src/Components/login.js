@@ -11,7 +11,6 @@ class Login extends Component{
         errormessage: []
     }
 
-
     SubmitHandler = (event) => {
         event.preventDefault();
         let email = event.target.email.value;
@@ -38,7 +37,7 @@ class Login extends Component{
     render() {
         return <div>
         <Row>
-            <Col className='login-container' md={{ span: 6, offset: 3 }}>
+            <Col md={{ span: 6, offset: 3 }}>
                 <div className='login-text'>
                     <h1>Login</h1>
                     <div>Hello! Welcome to simple user referral flow app</div>

@@ -1,6 +1,6 @@
 import React,{ Component } from 'react'
 import {Row,Col,Form,Button,Alert} from 'react-bootstrap'
-import { firebase , firebaseDBUsers } from '../config/firebase'
+import { firebase , firebaseDBUsers , firebaseDBReferral } from '../config/firebase'
 import {Link} from 'react-router-dom'
 
 class Register extends Component{
@@ -13,31 +13,77 @@ class Register extends Component{
 
     SubmitHandler = (event) => {
 
-        let email = event.target.email.value;
-        let password =  event.target.password.value;
-        let confirmpassword =  event.target.confirmpassword.value;
-        let displayname = event.target.displayname.value;
-        let current = this;
-    
+        const email = event.target.email.value;
+        const password =  event.target.password.value;
+        const confirmpassword =  event.target.confirmpassword.value;
+        const displayname = event.target.displayname.value;
+        const refrencekey = event.target.refrencekey.value;
+        const current = this;
+        let error = false;
         event.preventDefault();
-        current.resetErrors();
-        password === confirmpassword ? (
-        firebase.auth().createUserWithEmailAndPassword(email, password).then((result) => {
-            const user = result.user;
-            const uid = user.uid;
-            firebaseDBUsers.push({
-                uid,
-                email,
-                displayname,
-                date: Date()
+        this.setState({errormessage:[]});
+        let referralsKey = null;
+        
+        let referralsData = null;
+        if ( password === confirmpassword ){
+            if(refrencekey){
+                firebaseDBReferral.orderByChild("key").equalTo(refrencekey).once('value').then( (snapshot) => {
+                    if(!snapshot.hasChildren())
+                    {
+                        error = true;
+                        current.setErrors('Your Reference Key is not valid.')
+                    }
+                    else{
+                        snapshot.forEach((childsnapshot) => {
+                            referralsData = childsnapshot.val();
+                            
+                            referralsKey = childsnapshot.key;
+                            if (referralsData.email !== email)
+                            {
+                                error = true;
+                                current.setErrors('This reference key is not related to your email.')
+                            }
+                        })
+                    }
+                })
+            }
+
+        }
+        else{
+            error = true;
+            current.setErrors('Password and Confirm Password must be same.')
+        }
+        if(!error)
+        {
+            console.log('here');
+            firebase.auth().createUserWithEmailAndPassword(email, password).then((result) => {
+                const user = result.user;
+                const uid = user.uid;
+                firebaseDBUsers.push({
+                    uid,
+                    email,
+                    displayname,
+                    signupdate: Date()
+                })
+                referralsData.uid = uid;
+                referralsData.status = 'accepted';
+                referralsData.registerDate = new Date();
+                
+
+                let updates = {};
+                updates['' + referralsKey] = referralsData;
+                
+                firebaseDBReferral.update(updates);
+
+
+            }).catch(function(error) {
+                current.setErrors(error.message);
             })
-        }).catch(function(error) {
-            current.setErrors(error.message);
-        })):(current.setErrors('Password and Confirm Password must be same.'))
+        }
     }
     
     resetErrors = () => {
-        this.setState({errormessage:[]});
+        
     }
 
     setErrors = (message) => {
@@ -51,14 +97,15 @@ class Register extends Component{
 
     render = () => {
 
-
+        console.log(this.props)
+        const refNumber = this.props.match.params.ref ? this.props.match.params.ref : '';
         
         return (<Row>
-                <Col className='login-container' md={{ span: 6, offset: 3 }}>
+                <Col md={{ span: 6, offset: 3 }}>
                 <div className='login-text'>
                     <h1>SignUp</h1>
                     <div>Hello! Welcome to simple user referral flow app</div>
-                    <div>Already a member? <Link to='login'>Login here!</Link></div>
+                    <div>Already a member? <Link to='/login'>Login here!</Link></div>
                 </div>
                     <Form className='register-form' onSubmit={this.SubmitHandler} >
                         <Form.Group controlId="formBasicEmail">
@@ -81,7 +128,7 @@ class Register extends Component{
                         </Form.Group>
                         <Form.Group controlId="formRefrenceKey">
                             <Form.Label>Reference Key</Form.Label>
-                            <Form.Control type="text" name='refrencekey' placeholder="" />
+                            <Form.Control type="text" name='refrencekey' placeholder="" disabled={refNumber ? true : false } value={refNumber} />
                             <Form.Text className="text-muted">
                             If you don't have any reference key leave it empty.
                             </Form.Text>

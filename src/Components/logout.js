@@ -1,13 +1,15 @@
+
 import React from 'react'
 import { firebase } from '../config/firebase'
-import { Redirect } from 'react-router-dom';
+
 
 const Logout = ((props) => {
-    const user = firebase.auth().currentUser;
-    if (user) {firebase.auth().signOut().then(()=>{
-        props.history.push('/login');
-    }) }
-    return <Redirect to='/login' /> 
+    firebase.auth().signOut().then(()=>{
+        // 
+        // setTimeout(function(){ props.history.push('/login') }, 1000);
+
+    })
+    return <div>You are loged out</div>
 })
 
 export default Logout;
