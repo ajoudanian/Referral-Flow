@@ -19,15 +19,15 @@ import {combineReducers} from 'redux';
 // }
 
 
-// function posts(state = postsData, action) {
-//     switch (action.type){
-//         case 'REMOVE-PHOTO': return [...state.slice(0,action.index),...state.slice(action.index + 1 )]
-//         case 'ADD-PHOTO': return [...state,action.post]
-//         case 'LOAD-POSTS': return action.posts
-//         default: return state;
-//     }
-// } 
+function posts(state = {}, action) {
+    switch (action.type){
+        case 'REMOVE-PHOTO': return []
+        case 'ADD-PHOTO': return []
+        case 'LOAD-POSTS': return []
+        default: return state;
+    }
+} 
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({posts});
 
 export default rootReducer;
