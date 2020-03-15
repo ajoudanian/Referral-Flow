@@ -1,7 +1,7 @@
 import React,{ Component } from 'react'
 import { Card , Button , Form , Col , Row , Toast} from 'react-bootstrap'
 import { firebaseDBUsers, firebaseDBReferral } from '../config/firebase'
-
+import emailjs from 'emailjs-com';
 
 class InviteForm extends Component {
 
@@ -24,7 +24,6 @@ class InviteForm extends Component {
             else{
 
                 firebaseDBReferral.orderByChild("email").equalTo(email).once('value').then( (snapshot) => {
-                    console.log(snapshot.hasChildren());
                     if(snapshot.hasChildren())
                     {
                         current.setState({showerror:true})
@@ -45,6 +44,28 @@ class InviteForm extends Component {
                         current.props.addReferral(item).then( () => {
                             current.setState({successMessage:key, showsuccess:true})
                         })
+
+                        
+
+                        let template_params = {
+                            reply_to: "ajoudanian@gmail.com",
+                            to_address : email,
+                            from_name: this.props.currentUser.displayName,
+                            message_html: `Please use <b>${key}</b>  or this <a href='http://127.0.0.1:3000/register/${key}'>link</a> to subscribe.`,
+        
+                         }
+                         const service_id = "default_service";
+                         const template_id = "template_4rWfT5F3";
+                         const your_user_id = 'user_d5sPKSwfzgAn7eEQd8M0z';
+        
+
+                         emailjs.sendForm(service_id, template_id, template_params , your_user_id)
+                        .then((result) => {
+                            console.log('then',result.text);
+                        }).catch((error) => console.log(error));
+                        
+        
+
                         
                     }
                 })
