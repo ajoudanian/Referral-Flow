@@ -3,15 +3,18 @@ import { Route, Redirect } from 'react-router-dom';
 
 const UnPrivateRoute = ({ 
         auth,
-        component:Comp,
         ...rest
     }) => {
-    return <Route {...rest} component={(props) => (
-        !auth ? 
-        <Comp {...props} />
-        :
-        <Redirect to="/" />
-    )} />
-}
+        console.log('auth',auth);
+        console.log(rest);
+
+        if (!auth){ 
+            return <Route {...rest} />
+        }
+        else{
+            return <Redirect to="/" />
+        }
+    }
+
 
 export default UnPrivateRoute;

@@ -18,6 +18,7 @@ class Routes extends Component {
             <div>
                 <Switch>
                     <Route path='/about' component={About} />
+                    <UnPrivateRoute auth={auth} path='/register/:ref' component={Register} />
                     <UnPrivateRoute auth={auth} path='/register' component={Register} />
                     <UnPrivateRoute auth={auth} path='/login' component={Login} />
                     <PrivateRoute auth={auth} path='/logout' component={Logout} />
