@@ -2,32 +2,14 @@
 import {combineReducers} from 'redux';
 
 
-// function comments( state = {} , action ) {
-//     switch (action.type){
-//         case 'LOAD-COMMENTS': { return action.comments }
-//         case 'ADD-COMMENT': {
-//             if(!state[action.postId]){
-//                 return {...state,[action.postId]:[action.comment]}
-//             }
-//             else{
-//                 return {...state,[action.postId]:[...state[action.postId],action.comment]}
-//             }
-            
-//         }
-//         default: return state
-//     }
-// }
-
-
-function posts(state = {}, action) {
+function users(state = [], action) {
     switch (action.type){
-        case 'REMOVE-PHOTO': return []
-        case 'ADD-PHOTO': return []
-        case 'LOAD-POSTS': return []
+        case 'GET-USERS-ALL': { return action.payload }
         default: return state;
     }
 } 
 
-const rootReducer = combineReducers({posts});
+
+const rootReducer = combineReducers({users});
 
 export default rootReducer;

@@ -1,15 +1,20 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { createStore , applyMiddleware, compose} from 'redux'
+import { createStore , applyMiddleware} from 'redux'
 import rootReducer from '../redux/reducers'
-import thunk from 'redux-thunk';
+import promiseMiddleware from 'redux-promise';
 
-const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
-const store = createStore(rootReducer,composeEnhancers(applyMiddleware(thunk)));
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore)
 
 
 const ReducProvider = (props) => (
-    <Provider store={store}>{props.children}</Provider>
+    <Provider store={createStoreWithMiddleware(rootReducer)}>{props.children}</Provider>
     )
 
 export default ReducProvider;
+
+
+
+
+
+
