@@ -10,6 +10,27 @@ body{
     box-shadow: 0 3px 6px -3px #999; 
 }
 
-.login-form{
-    padding: 50px;
+.login-form,
+.register-form{
+    padding: 10px 40px 50px;
+}
+
+.register-link
+{
+    
+}
+
+.login-text,
+.register-text{
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    margin-top: 40px;
+    color: #444;
+}
+
+.login-text h1{
+    text-transform: uppercase;
+    color: #555599;
+    font-weight: bold;
 }

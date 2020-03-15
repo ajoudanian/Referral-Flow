@@ -6,11 +6,10 @@ const Layout = (props) => (
     <div>
     
         <Header />
-        <Container fluid>
+        <Container>
         <div>{props.children}</div>
         </Container>
-    </div>
-    
+    </div>   
 )
 
 export default Layout;

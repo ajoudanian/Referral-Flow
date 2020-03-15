@@ -3,9 +3,12 @@ import { Route,Switch } from 'react-router-dom';
 
 //Components
 import Home from '../components/home'
+import About from '../components/about'
 import Login from '../components/login'
-import SignIn from '../components/signin'
+import Logout from '../components/logout'
 import Register from '../components/register'
+import PrivateRoute from '../soc/private-route'
+import UnPrivateRoute from '../soc/un-private-route'
 
 class Routes extends Component {
     render(){
@@ -13,10 +16,11 @@ class Routes extends Component {
         return (
             <div>
                 <Switch>
-                    <Route path='/signin' component={SignIn} />
+                    <Route path='/about' component={About} />
                     <Route path='/register' component={Register} />
-                    <Route path='/login' component={Login} />
-                    <Route path='/' component={Home} />
+                    <UnPrivateRoute path='/login' component={Login} />
+                    <UnPrivateRoute path='/logout' component={Logout} />
+                    <PrivateRoute auth={this.props.auth} path='/' component={Home} />
                     
                 </Switch>
             </div>

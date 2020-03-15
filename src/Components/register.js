@@ -1,7 +1,7 @@
 import React,{ Component } from 'react'
 import {Row,Col,Form,Button,Alert} from 'react-bootstrap'
 import { firebase , firebaseDBUsers } from '../config/firebase'
-
+import {Link} from 'react-router-dom'
 
 class Register extends Component{
 
@@ -18,10 +18,7 @@ class Register extends Component{
         let confirmpassword =  event.target.confirmpassword.value;
         let displayname = event.target.displayname.value;
         let current = this;
-        this.setState({
-            dd: 'dd'
-        });
-        
+    
         event.preventDefault();
         current.resetErrors();
         password === confirmpassword ? (
@@ -58,7 +55,12 @@ class Register extends Component{
         
         return (<Row>
                 <Col className='login-container' md={{ span: 6, offset: 3 }}>
-                    <Form className='login-form' onSubmit={this.SubmitHandler} >
+                <div className='login-text'>
+                    <h1>SignUp</h1>
+                    <div>Hello! Welcome to simple user referral flow app</div>
+                    <div>Already a member? <Link to='login'>Login here!</Link></div>
+                </div>
+                    <Form className='register-form' onSubmit={this.SubmitHandler} >
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control type="email" name='email' placeholder="Enter email" required/>
@@ -69,9 +71,6 @@ class Register extends Component{
                         <Form.Group controlId="formDiaplayName">
                             <Form.Label>Display Name</Form.Label>
                             <Form.Control type="text" name='displayname' placeholder="Your Name" required />
-                            <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                            </Form.Text>
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
@@ -81,8 +80,11 @@ class Register extends Component{
                             <Form.Control type="password" name='confirmpassword' placeholder="Confirm Password" required />
                         </Form.Group>
                         <Form.Group controlId="formRefrenceKey">
-                            <Form.Label>Refrance Key</Form.Label>
+                            <Form.Label>Reference Key</Form.Label>
                             <Form.Control type="text" name='refrencekey' placeholder="" />
+                            <Form.Text className="text-muted">
+                            If you don't have any reference key leave it empty.
+                            </Form.Text>
                         </Form.Group>
                         {
                             this.state.errormessage.map((message, index) => (

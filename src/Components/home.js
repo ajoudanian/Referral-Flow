@@ -1,11 +1,19 @@
-import React from 'react'
-import Auth from '../soc/auth'
+import React,{ Component } from 'react'
+// import { firebase } from '../config/firebase'
 
 
-const Home = () => (
-    <Auth><div>
+class Home extends Component{
+
+
+    componentDidMount(){
+
+    }
+    render(){
+        
+        return <div>
         Home
-    </div></Auth>
-)
+        </div>    
+    }   
+}
 
 export default Home;
