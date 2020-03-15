@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter} from 'react-router-dom';
-import './config/db';
+import { firebase } from './config/firebase'
 import './style/style.css';
 
 //COMPONENTS
@@ -17,7 +17,7 @@ class App extends Component {
             <BrowserRouter>
                 <ReducProvider>
                     <Layout>
-                        <Routes />
+                        <Routes {...this.props} />
                     </Layout>
                 </ReducProvider>
             </BrowserRouter>

@@ -13,6 +13,7 @@ const firebaseConfig = {
 
   firebase.initializeApp(firebaseConfig);
 
-const database = firebase.database();
+const firebaseDB = firebase.database();
+const firebaseDBUsers = firebase.database().ref('users');
 
-export {database};
+export { firebase , firebaseDB , firebaseDBUsers };
