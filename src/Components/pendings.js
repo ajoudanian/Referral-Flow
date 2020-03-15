@@ -17,7 +17,9 @@ const Pendings = (props) =>
     <tbody>
         {
 
-            props.referral.map( (item,index) => {
+            props.referral.filter((item) => 
+            item.status === 'pending' ? true : false
+            ).map( (item,index) => {
                 
                 const date = new Date(item.inviteDate);
                 const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' , hour:'numeric', minute:'numeric' };
